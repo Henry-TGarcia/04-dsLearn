@@ -1,43 +1,45 @@
 package com.devsuperior.dslearnbds.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_course")
-public class Course implements Serializable {
+@Table(name="tb_offer")
+public class Offer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	//Atributos
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private String imgUri;
-	private String imgGrayUri;
+	private String edition;
+	private Instant startMoment;
+	private Instant endMoment;
 	
 	//Associações
-	@OneToMany(mappedBy = "course")
-	private List<Offer> offers = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "course_id")
+	private Course course;
 	
 	//Construtores
-	public Course() {
+	public Offer() {
 	}
 
-	public Course(Long id, String name, String imgUri, String imgGrayUri) {
+	public Offer(Long id, String edition, Instant startMoment, Instant endMoment, Course course) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.imgUri = imgUri;
-		this.imgGrayUri = imgGrayUri;
+		this.edition = edition;
+		this.startMoment = startMoment;
+		this.endMoment = endMoment;
+		this.course = course;
 	}
 
 	//Gets e Sets
@@ -49,32 +51,36 @@ public class Course implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getEdition() {
+		return edition;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEdition(String edition) {
+		this.edition = edition;
 	}
 
-	public String getImgUri() {
-		return imgUri;
+	public Instant getStartMoment() {
+		return startMoment;
 	}
 
-	public void setImgUri(String imgUri) {
-		this.imgUri = imgUri;
+	public void setStartMoment(Instant startMoment) {
+		this.startMoment = startMoment;
 	}
 
-	public String getImgGrayUri() {
-		return imgGrayUri;
+	public Instant getEndMoment() {
+		return endMoment;
 	}
 
-	public void setImgGrayUri(String imgGrayUri) {
-		this.imgGrayUri = imgGrayUri;
+	public void setEndMoment(Instant endMoment) {
+		this.endMoment = endMoment;
 	}
 
-	public List<Offer> getOffers() {
-		return offers;
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 	//HashCode e Equals
@@ -94,7 +100,7 @@ public class Course implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Course other = (Course) obj;
+		Offer other = (Offer) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
