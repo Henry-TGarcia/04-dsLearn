@@ -16,11 +16,11 @@ public class EnrollmentPK implements Serializable {
 	
 	//Associações
 	@ManyToOne
-	@JoinColumn(name = "user_Id")
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "offer_Id")
+	@JoinColumn(name = "offer_id")
 	private Offer offer;
 	
 	//Construtores
